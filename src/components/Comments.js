@@ -10,6 +10,7 @@ import {
 
 } from 'react-native';
 import { MaterialDialog } from 'react-native-material-dialog';
+import axios from 'axios';
 
 
 export default class Comments extends Component {
@@ -19,13 +20,7 @@ export default class Comments extends Component {
     this.state = {
       repVisible: false,
       delVisible: false,
-      comm:[
-        {id:1, image: "https://bootdey.com/img/Content/avatar/avatar1.png", name:"ماريا ماجد",    comment:"الطبيب دعونا في المكتب بسرعة حتى وقت الانتظار لم يكن سيئا للغاية. كان السعر جيد والخدمة رائعة", time: '4:50 am'},
-        {id:2, image: "https://bootdey.com/img/Content/avatar/avatar6.png", name:"سليمان حسن",     comment:" كان الطبيب لطيفًا للغاية ومحترفًا ، لكن الوقت الذي انتظرناه كان كثيرًا. انتظرنا ساعة واحدة ولم نر الطبيب إلا لمدة عشر دقائق", time: '7:50 pm'},
-        {id:3, image: "https://bootdey.com/img/Content/avatar/avatar7.png", name:"لين وهاب", comment:"لقد ذهبنا إلى أربعة أطباء آخرين وكان الطبيب سامي فقط قادرًا على اكتشاف المشكلة في النهاية. ينصح به بشده", time: '1:30 pm'},
-        {id:4, image: "https://bootdey.com/img/Content/avatar/avatar2.png", name:"أميرا دبوس",  comment:"  طبيب سيء حقًا ، خدمة سيئة ، مكتب متسخ ، ومن الصعب العثور على موقع العيادة. ", time: '3:32 pm'},
-        {id:5, image: "https://bootdey.com/img/Content/avatar/avatar3.png", name:"رمزي الحاج",  comment:"متسمب مسينتب سثث صحثهص ققق ثصثثص ضجض صصثص ذمتستس ذنتتيت تهثعقهصعق صح حهعه ", time: '5:00 pm'},
-       ],
+       userId: this.props.userId,
        COMMENTS: this.props.COMMENTS
     }
     
@@ -43,11 +38,26 @@ export default class Comments extends Component {
     this.setState({ delVisible: false });
   }
   handleDel = () => {
-    console.log("delete");
-    this.setState({ delVisible: false });
+    console.log("delete is pressed");
+    axios({
+      method: 'delete',
+      url: 'https://rolodex2.azurewebsites.net/api/v1/Comments/'+ this.state.commentId + '/removeComment?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==',
+    }).then((response) => {
+      console.log(response.data);
+    })
+    this.setState({ delVisible: false,   commentId: null});
   }
 
   render() {
+    delBtn = (item)=> {
+      if (item.USERID == this.state.userId){
+        
+        return (<TouchableOpacity onPress={() => this.setState({delVisible: true, commentId: item.COMMENTID})}>
+                 <Image style={styles.flag} source = {require('../images/cat.png')}/>
+              </TouchableOpacity>);
+      }
+    } 
+
     return (
       <View style={styles.container1}>
       {/* {console.log(this.state.COMMENTS)} */}
@@ -95,14 +105,12 @@ export default class Comments extends Component {
                 <View style={styles.contentHeader}>
                   <Text  style={styles.name}>{Notification.USERNAME}</Text>
                   <Text style={styles.time}>
-                    {Notification.DATE}
+                    {Notification.DATE.split('T')[0]}
                   </Text>
                   <TouchableOpacity onPress={() => this.setState({repVisible: true})}>
                     <Image style={styles.flag} source = {require('../images/report.png')}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.setState({delVisible: true})}>
-                    <Image style={styles.flag} source = {require('../images/report.png')}/>
-                  </TouchableOpacity>
+                  {delBtn(Notification)}
                 </View>
                 <Text style={styles.comment} rkType='primary3 mediumLine'>{Notification.COMMENT}</Text>
               </View>

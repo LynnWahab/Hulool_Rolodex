@@ -7,6 +7,7 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
+    YellowBox,
     Alert
 } from 'react-native';
 // import LoginForm from './LoginForm'
@@ -16,6 +17,10 @@ export default class Login extends React.Component {
         this.state = {
             userId: 3,
         }
+        YellowBox.ignoreWarnings([
+            'Warning: componentWillMount is deprecated',
+            'Warning: componentWillReceiveProps is deprecated',
+          ]);
     }
     
     render() {

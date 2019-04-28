@@ -23,7 +23,7 @@ export default class HomePage extends React.Component {
       };  
     }
   
-   async componentWillMount() {
+   async componentDidMount() {
       await this.fetchData();
     }
     

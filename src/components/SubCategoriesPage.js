@@ -44,7 +44,7 @@ export default class SubCategoriesPage extends React.Component {
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     await this.fetchData();
   }
 

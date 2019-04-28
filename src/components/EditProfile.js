@@ -54,19 +54,19 @@ export default class ProfileDetail extends Component {
         <View style={styles.container}>
           <MaterialDialog
           style={{alignSelf: 'row-reverse'}}
-          title="Are you sure you want to delete acct"
+          title="متأكد من ازالة الحساب الشخصي؟"
           visible={this.state.delProfile}
-          cancelLabel="no"
-          okLabel="yes" 
+          cancelLabel="لا"
+          okLabel="نعم" 
           onOk={() => {this.handleDelProfile()}}
           onCancel={() => {this.handleDelProfCancel()}}>
           </MaterialDialog>
           <MaterialDialog
           style={{alignSelf: 'row-reverse'}}
-          title="Are you sure you want to delete this service"
+          title="متأكد من ازالة الخدمة؟"
           visible={this.state.delService}
-          cancelLabel="no"
-          okLabel="yes" 
+          cancelLabel="لا"
+          okLabel="نعم" 
           onOk={() => {this.handleDelService()}}
           onCancel={() => {this.handleDelServiceCancel()}}>
           </MaterialDialog>
@@ -75,14 +75,14 @@ export default class ProfileDetail extends Component {
             <Image style={styles.avatar} source={{uri: this.state.person.image}} />
             <Button
                 //onPress={onPressLearnMore}
-                title="Change Photo"
+                title="تغيير الصورة"
                 color="#841584"
                 accessibilityLabel="Change photo"
             />
           </View> 
 
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Edit name</Text>   
+            <Text style={styles.cardTitle}>تعديل الاسم</Text>   
             <TextInput 
                     placeholder = {this.state.person.name}
                     placeholderTextColor = 'rgba(0,0,0,1)'
@@ -95,7 +95,7 @@ export default class ProfileDetail extends Component {
           </View>
 
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Edit phone number</Text>   
+            <Text style={styles.cardTitle}>تعديل رقم الهاتف</Text>   
             <TextInput
                     placeholder ={this.state.person.number}
                     placeholderTextColor = 'rgba(0,0,0,1)'
@@ -106,7 +106,7 @@ export default class ProfileDetail extends Component {
                     /> 
           </View>
           <TouchableOpacity onPress={()=> this.setState({delProfile: true})}> 
-              <Text style = {styles.buttonText2}> Delete this account </Text>
+              <Text style = {styles.buttonText2}> ازالة الحساب </Text>
           </TouchableOpacity>
           <View
              style={{
@@ -116,7 +116,7 @@ export default class ProfileDetail extends Component {
             }}
           />  
           <View style ={{alignItems: 'center'}}>
-          <Text style={styles.cardTitle2}>{"\n"}Edit Businesses</Text> 
+          <Text style={styles.cardTitle2}>{"\n"}تعديل الخدمه</Text> 
           </View>
           <FlatList
           
@@ -140,7 +140,7 @@ export default class ProfileDetail extends Component {
                   <View style={[{alignItems: 'flex-end'}]}>
                     <Button
                       //onPress={onPressLearnMore}
-                      title="Edit Business Name"
+                      title="تعديل الاسم"
                       color="#808080"
                       accessibilityLabel="Change your business name"
                     />
@@ -150,7 +150,7 @@ export default class ProfileDetail extends Component {
                 <View style={[{alignItems: 'flex-end'}]}>
                   <Button
                     //onPress={onPressLearnMore}
-                    title="Edit Phone Number"
+                    title="تعديل رقم الهاتف"
                     color="#808080"
                     accessibilityLabel="Change your phone number"
                   />
@@ -158,7 +158,7 @@ export default class ProfileDetail extends Component {
                 
                 <Text style={styles.name} rkType='primary3 mediumLine'>{Notification.number} {"\n"}</Text>
                 <TouchableOpacity onPress={()=> this.setState({delService: true})}> 
-                  <Text style = {styles.buttonText2}> Delete this service </Text>
+                  <Text style = {styles.buttonText2}> ازالة الخدمه </Text>
                 </TouchableOpacity>
               </View>
               <View style={{borderBottomColor: 'orange', borderBottomWidth: 5}}/>  

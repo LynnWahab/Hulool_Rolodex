@@ -73,6 +73,7 @@ export default class ProductDetail extends Component {
     if (this.state.loaded3){
       this.setState({ dialogVisible: false });
     }
+    this.setState({ dialogVisible: false });
   }
 
   handleRCancel = () => {
@@ -126,7 +127,7 @@ export default class ProductDetail extends Component {
   };
 
 
-  async componentWillMount() {
+  async componentDidMount() {
     await this.fetchData1();
     await this.fetchData2();
   }
@@ -255,7 +256,7 @@ export default class ProductDetail extends Component {
         
       </View>
           <View style={styles.addComment}>
-            <Comments COMMENTS = {this.state.COMMENTS}/>
+            <Comments COMMENTS = {this.state.COMMENTS} userId = {this.state.userId}/>
           </View> 
        </View>
         </ScrollView>

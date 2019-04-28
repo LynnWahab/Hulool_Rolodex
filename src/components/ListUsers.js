@@ -41,7 +41,7 @@ export default class ListUsers extends React.Component {
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     await this.fetchData();
   }
 
