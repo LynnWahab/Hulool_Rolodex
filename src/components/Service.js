@@ -120,9 +120,7 @@ export default class ProductDetail extends Component {
       noData: true,
     };
     ImagePicker.showImagePicker(options, response => {
-      if (response.uri) {
-        this.setState({ uploadImages: response });
-      }
+        this.setState({ uploadImages: response.uri });
     });
   };
 
