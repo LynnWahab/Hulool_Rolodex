@@ -80,6 +80,7 @@ export default class HomePage extends React.Component {
     }
   
     render() {
+      const { navigate } = this.props.navigation;
       return (
         <View style={styles.container}>
           {this.renderContent()}
@@ -87,15 +88,23 @@ export default class HomePage extends React.Component {
            containerHeight={60}
            backgroundColor='#dcdcdc'>
             <View style= {styles.cont}>
-              <TouchableOpacity onPress={()=> {}}>
+              {/* <TouchableOpacity onPress={()=> {}}>
                 <Image style={styles.flag} source = {require('../images/home.png')}/>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
-              <TouchableOpacity onPress={() => {} }>
+              <TouchableOpacity onPress={() => {
+                 navigate('EditProfile', {
+                  userId: this.state.userId
+                })
+              } }>
                 <Image style={styles.flag} source = {require('../images/profileicon.png')}/>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity onPress={() => {
+                navigate('AboutUs', {
+                  // id: this.state.userId
+                })
+              }}>
                 <Image style={styles.flag} source = {require('../images/info.png')}/>
               </TouchableOpacity>
             </View>

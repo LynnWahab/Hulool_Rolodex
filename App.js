@@ -30,6 +30,17 @@ const HomeNav = StackNavigator({
       header: null,
     }
   },
+
+  EditProfile: {
+    screen: EditProfile, 
+  },
+  AboutUs: {
+    screen: AboutUs,
+    navigationOptions: {
+      // header: null,
+      title: 'عن التطبيق',
+    }  
+  },
   SubCategoriesPage: { screen: SubCategoriesPage,
     navigationOptions: {
     } 
