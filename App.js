@@ -16,6 +16,7 @@ import SignupPage from './src/components/SignupPage'
 import EditProfile from './src/components/EditProfile'
 import SubCategoriesPage from './src/components/SubCategoriesPage'
 import AddService from './src/components/AddService'
+import AboutUs from './src/components/AboutUs'
 
 
 import React, { Component } from 'react';
@@ -73,7 +74,7 @@ const StartUp = StackNavigator({
 
 export default class App extends React.Component {
   render() {
-    return (<EditProfile/>);
+    return (<StartUp/>);
   }
 }
 

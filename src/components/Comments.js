@@ -53,7 +53,7 @@ export default class Comments extends Component {
       if (item.USERID == this.state.userId){
         
         return (<TouchableOpacity onPress={() => this.setState({delVisible: true, commentId: item.COMMENTID})}>
-                 <Image style={styles.flag} source = {require('../images/cat.png')}/>
+                 <Image style={styles.flag} source = {require('../images/garbage.jpeg')}/>
               </TouchableOpacity>);
       }
     } 
@@ -107,10 +107,10 @@ export default class Comments extends Component {
                   <Text style={styles.time}>
                     {Notification.DATE.split('T')[0]}
                   </Text>
+                  {delBtn(Notification)}
                   <TouchableOpacity onPress={() => this.setState({repVisible: true})}>
                     <Image style={styles.flag} source = {require('../images/report.png')}/>
                   </TouchableOpacity>
-                  {delBtn(Notification)}
                 </View>
                 <Text style={styles.comment} rkType='primary3 mediumLine'>{Notification.COMMENT}</Text>
               </View>
