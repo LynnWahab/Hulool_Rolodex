@@ -7,6 +7,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import axios from "axios";
+import { selectContactPhone } from 'react-native-select-contact';
 
 export default class AddService extends React.Component {
   constructor(props){
@@ -49,8 +50,19 @@ export default class AddService extends React.Component {
           // value = {this.state.providerName}
           onChangeText={(text) => this.setState({phoneNumber: text})}
           />
-        
-        
+
+        <TouchableOpacity style={styles.button} onPress = {()=>
+            selectContactPhone()
+            .then(selection => {
+
+                let { contact, selectedPhone } = selection;
+                console.log(`Selected ${selectedPhone.type} phone number ${selectedPhone.number} from ${contact.name}`);
+                // return selectedPhone.number;
+            })
+
+          }>
+          <Text style={styles.btntext}> Add from contacts</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress = {()=>
           // this.props.navigation.navigate('ListUsers')
@@ -102,7 +114,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(225,225,225,0.2)',
     marginBottom: 20,
     color: '#FFF',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    borderRadius: 15,
   },
   button: {
     marginTop: 30,
@@ -110,6 +123,8 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     width: '100%',
     textAlign: "center",
+    borderRadius: 15,
+
   },
   btntext:{ 
     fontSize: 25,
