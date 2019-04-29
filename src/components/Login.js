@@ -21,6 +21,7 @@ export default class Login extends React.Component {
             'Warning: componentWillMount is deprecated',
             'Warning: componentWillReceiveProps is deprecated',
           ]);
+        console.disableYellowBox=true
     }
     
     render() {
@@ -65,9 +66,9 @@ export default class Login extends React.Component {
                     <Text style = {styles.buttonText1}> دخول </Text>
                 </TouchableOpacity>
                 
-                <TouchableOpacity onPress = { ()=>this.props.navigation.navigate('SignupPage')}> 
+                {/* <TouchableOpacity onPress = { ()=>this.props.navigation.navigate('SignupPage')}> 
                     <Text style = {styles.buttonText2}>  إنشاء حساب جديد  </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
             </View>
         );

@@ -11,13 +11,14 @@ import {
   Button,
 } from 'react-native';
 import { MaterialDialog } from 'react-native-material-dialog';
+import axios from 'axios';
 
-
-export default class ProfileDetail extends Component {
+export default class EditProfile extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
+        userId: this.props.navigation.state.params.userId,
         data:[
           {id:1, image: "https://bootdey.com/img/Content/avatar/avatar1.png", name:"ماريا ماجد",    number:"76666666 "},
           {id:2, image: "https://bootdey.com/img/Content/avatar/avatar6.png", name:"سليمان حسن",     number:"76666666 "},
@@ -95,7 +96,7 @@ export default class ProfileDetail extends Component {
           </View>
 
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>تعديل رقم الهاتف</Text>   
+            <Text style={styles.cardTitle}> رقم الهاتف</Text>   
             <TextInput
                     placeholder ={this.state.person.number}
                     placeholderTextColor = 'rgba(0,0,0,1)'
