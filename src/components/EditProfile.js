@@ -12,19 +12,21 @@ import {
 } from 'react-native';
 import { MaterialDialog } from 'react-native-material-dialog';
 import axios from 'axios';
+import EditListing from './EditListing';
 
 export default class EditProfile extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
-        userId: this.props.navigation.state.params.userId,
+        username: '',
+        // userId: this.props.navigation.state.params.userId,
         data:[
           {id:1, image: "https://bootdey.com/img/Content/avatar/avatar1.png", name:"ماريا ماجد",    number:"76666666 "},
           {id:2, image: "https://bootdey.com/img/Content/avatar/avatar6.png", name:"سليمان حسن",     number:"76666666 "},
-          {id:3, image: "https://bootdey.com/img/Content/avatar/avatar7.png", name:"لين وهاب", number:"76666666 "},
-          {id:4, image: "https://bootdey.com/img/Content/avatar/avatar2.png", name:"أميرا دبوس",  number:"76666666 "},
-          {id:5, image: "https://bootdey.com/img/Content/avatar/avatar3.png", name:"رمزي الحاج",  number:"76666666 "},
+          // {id:3, image: "https://bootdey.com/img/Content/avatar/avatar7.png", name:"لين وهاب", number:"76666666 "},
+          // {id:4, image: "https://bootdey.com/img/Content/avatar/avatar2.png", name:"أميرا دبوس",  number:"76666666 "},
+          // {id:5, image: "https://bootdey.com/img/Content/avatar/avatar3.png", name:"رمزي الحاج",  number:"76666666 "},
         ],
         delProfile: false,
         delService: false,
@@ -83,15 +85,14 @@ export default class EditProfile extends Component {
           </View> 
 
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>تعديل الاسم</Text>   
+            <Text style={styles.cardTitle}> الاسم</Text>   
             <TextInput 
-                    placeholder = {this.state.person.name}
+                    placeholder = {this.state.data[0].name}
                     placeholderTextColor = 'rgba(0,0,0,1)'
                     color='rgba(0,0,0,1)'
-                   // value= "Name"
                     returnKeyType = 'go'
                     style = {styles.input}
-                    //ref {(input) => this.passwordInput = input}
+                    // onChangeText={(use) => this.setState({username})}
                     /> 
           </View>
 
@@ -116,61 +117,8 @@ export default class EditProfile extends Component {
              marginTop: 3,
             }}
           />  
-          <View style ={{alignItems: 'center'}}>
-          <Text style={styles.cardTitle2}>{"\n"}تعديل الخدمه</Text> 
-          </View>
-          <FlatList
-          
-        style={styles.root}
-        data={this.state.data}
-        extraData={this.state}
-        keyExtractor={(item)=>{
-          return item.id;
-        }}
-        renderItem={(item) => {
-          const Notification = item.item;
-          
-          return(
-            <View style={styles.container1}>
-            
-              {/* <TouchableOpacity onPress={() => {}}> */}
-                <Image style={styles.image} source={{uri: Notification.image}}/>
-              {/* </TouchableOpacity> */}
-              <View style={styles.content}>
-                <View style={styles.contentHeader}>
-                  <View style={[{alignItems: 'flex-end'}]}>
-                    <Button
-                      //onPress={onPressLearnMore}
-                      title="تعديل الاسم"
-                      color="#808080"
-                      accessibilityLabel="Change your business name"
-                    />
-                  </View>
-                  <Text  style={styles.name}>{Notification.name} {"\n"}</Text>
-                </View>
-                <View style={[{alignItems: 'flex-end'}]}>
-                  <Button
-                    //onPress={onPressLearnMore}
-                    title="تعديل رقم الهاتف"
-                    color="#808080"
-                    accessibilityLabel="Change your phone number"
-                  />
-                </View>
-                
-                <Text style={styles.name} rkType='primary3 mediumLine'>{Notification.number} {"\n"}</Text>
-                <TouchableOpacity onPress={()=> this.setState({delService: true})}> 
-                  <Text style = {styles.buttonText2}> ازالة الخدمه </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{borderBottomColor: 'orange', borderBottomWidth: 5}}/>  
-
-            </View>
-          );
-        }}/>
-
-          
+          <EditListing/>
         </View>
-        
       </ScrollView>
     );
   }
@@ -179,16 +127,16 @@ export default class EditProfile extends Component {
 const styles = StyleSheet.create({
   container:{   
     flex:1,
-    padding:8,
-    marginTop: '10%',
+    // padding:8,
+    // marginTop: '10%',
     backgroundColor : "#ffffff",
   },
   container1: {
-    paddingLeft: 7,
-    paddingRight: 16,
-    paddingVertical: 12,
+    // paddingLeft: 7,
+    // paddingRight: 16,
+    // paddingVertical: 12,
     flexDirection: 'row-reverse',
-    alignItems: 'center',
+    // alignItems: 'center',
     borderBottomColor: 'purple', 
     borderBottomWidth: 1
 
@@ -200,21 +148,36 @@ const styles = StyleSheet.create({
     // marginBottom:30,
   },
   cardTitle2:{
-    alignSelf: 'center',
+    // alignSelf: 'center',
     color:"#841584",
     fontSize:22,
-    // marginBottom:3,
+    fontWeight: 'bold',
+    marginBottom:3,
+  },
+  cardTitle3:{
+    alignSelf: 'center',
+    color:"#808080",
+    fontSize:19,
   },
   avatar:{
     width:150,
     height:150,
     borderRadius: 70,
   },
-    input: {
+  input: {
     textAlign: 'right',
     height: 50,
     fontSize: 20,
     backgroundColor: 'rgba(225,225,225,0.2)',
+    // marginBottom: 20,
+    color: '#000',
+    // paddingHorizontal: 50,
+},
+    input2: {
+    textAlign: 'right',
+    height: 50,
+    fontSize: 20,
+    // backgroundColor: 'rgba(225,225,225,0.2)',
     marginBottom: 20,
     color: '#000',
     // paddingHorizontal: 50,
@@ -222,15 +185,15 @@ const styles = StyleSheet.create({
   card:{
     backgroundColor: "#FFFFFF",
     borderRadius:10,
-    padding:10,
-    height:'6%',
-    marginTop:'1%',
+    // padding:10,
+    // height:'6%',
+    // marginTop:'1%',
   },
   profileCard:{
-    height:'13%',
+    // height:'13%',
     alignItems: 'center',
-    marginTop:10,
-    marginBottom: 3,
+    // marginTop:10,
+    // marginBottom: 3,
   },
   name:{    
     textAlign: 'right',
@@ -260,23 +223,28 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textDecorationLine: 'underline',
     marginTop: 7,
+    marginBottom: 4,
 },
-// container1: {
-//   flexDirection: 'row-reverse',
-// },
+
 content: {
-  marginLeft: 16,
-  // flex: 1,
-  marginRight: 16, 
+  // marginLeft: 16,
+  flex: 1,
+  // flexDirection: 'row-reverse',
+  marginTop: 5,
+  // marginRight: 16, 
   textAlign: 'right'
 },
 image:{
-  marginBottom: 20,
+  width:140,
+  height:140,
+  borderRadius:65,
+
+},
+imandcat:{
+  marginTop: 20,
+  marginBottom: 100,
   marginRight: 3,
-  width:100,
-  height:100,
-  borderRadius:50,
   marginLeft:20,
   alignSelf: 'flex-end',
-},
+}
 });
