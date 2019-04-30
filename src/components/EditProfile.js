@@ -9,6 +9,7 @@ import {
   FlatList,
   TouchableOpacity,
   Button,
+  ActivityIndicator
 } from 'react-native';
 import { MaterialDialog } from 'react-native-material-dialog';
 import axios from 'axios';
@@ -19,26 +20,91 @@ export default class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        username: '',
-        // userId: this.props.navigation.state.params.userId,
-        data:[
-          {id:1, image: "https://bootdey.com/img/Content/avatar/avatar1.png", name:"ماريا ماجد",    number:"76666666 "},
-          {id:2, image: "https://bootdey.com/img/Content/avatar/avatar6.png", name:"سليمان حسن",     number:"76666666 "},
-          // {id:3, image: "https://bootdey.com/img/Content/avatar/avatar7.png", name:"لين وهاب", number:"76666666 "},
-          // {id:4, image: "https://bootdey.com/img/Content/avatar/avatar2.png", name:"أميرا دبوس",  number:"76666666 "},
-          // {id:5, image: "https://bootdey.com/img/Content/avatar/avatar3.png", name:"رمزي الحاج",  number:"76666666 "},
-        ],
+        preImage: "https://rolodex2.blob.core.windows.net/photos/",
+        // userId: 2,
+        userId: this.props.navigation.state.params.userId,
+        data:[],
+        loaded: false,
+
         delProfile: false,
         delService: false,
+
+        userName: null,
+        phoneNumber:null,
+
+        listingId: null,
+        listingTitle: null,
+        listingPhoneNumber: null,
+
         person: {id:1, image: "https://bootdey.com/img/Content/avatar/avatar6.png", name: 'sdfj', number: '3908408'}
       }
   }
+
+
+  async componentWillMount() {
+    await this.fetchData();
+  }
+  
+  fetchData = async () => {
+    console.log(this.state.userId)
+    axios.get('https://rolodex2.azurewebsites.net/api/v1/Users/' + this.state.userId + '/getprofile?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==')
+    .then((response) => {
+      this.setState({data: response.data});
+      // this.setState({userName: this.state.data[0].USERNAME, phoneNumber: this.state.data[0].USERNAME});
+      this.setState({loaded: true});
+      console.log("edit profile data fetched:");
+      console.log(response.data);
+      });
+  }
+
+  updateUser = () => {
+    axios({
+      method: 'post',
+      url: 'https://rolodex2.azurewebsites.net/api/v1/Users/'+this.state.userId+'/editUser?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==',
+      data: {
+        USERNAME: this.state.userName,
+        PHONENUMBER: this.state.phoneNumber,
+      }
+    }).then((response) => {
+      this.setState({
+        userName:null,
+        phoneNumber: null
+      })
+      console.log(response.data);
+    })
+  }
+
+  updateListing = (listingId) => {
+    axios({
+      method: 'post',
+      url: 'https://rolodex2.azurewebsites.net/api/v1/listings/'+ listingId +'/editListing?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==',
+      data: {
+        TITLE: this.state.listingTitle,
+        PHONENUMBER: this.state.listingPhoneNumber,
+      }
+    }).then((response) => {
+      this.setState({
+        listingTitle:null,
+        listingPhoneNumber: null
+      })
+      console.log(response.data);
+    })
+  }
+
 
   handleDelProfCancel = () => {
     this.setState({ delProfile: false });
   }
   handleDelProfile = () => {
-    console.log("Delete Profile");
+    axios({
+      method: 'delete',
+      url: 'https://rolodex2.azurewebsites.net/api/v1/Users/'+ this.state.userId +'/removeUser?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==',
+    }).then((response) => {
+      this.setState({
+        userId: null
+      })
+      console.log(response.data);
+    })
     this.setState({ delProfile: false });
   }
 
@@ -46,12 +112,90 @@ export default class EditProfile extends Component {
     this.setState({ delService: false });
   }
   handleDelService = () => {
-    console.log("Delete Service");
+    /// heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    axios({
+      method: 'delete',
+      url: 'https://rolodex2.azurewebsites.net/api/v1/Listings/'+ this.state.listingId +'/removeListing?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==',
+    }).then((response) => {
+      this.setState({
+        listingId: null
+      })
+      console.log(response.data);
+    })
     this.setState({ delService: false });
   }
 
   render() {
-    return (
+    listings = ()=> {
+      if(this.state.data[0].LISTINGID != null){
+        return (
+          <View>
+          <View style ={{alignItems: 'center'}}>
+            <Text style={styles.cardTitle2}>{"\n"}تعديل الخدمات</Text> 
+          </View>
+            <View>
+            <FlatList
+          data={this.state.data}
+          extraData={this.state}
+          keyExtractor={(item)=>{
+            return item.id;
+          }}
+          renderItem={(item) => {
+            const Notification = item.item;
+            
+            return(
+              <View style={styles.container1}>
+                <View style={styles.imandcat}> 
+                  <Image style={styles.image} source={{uri: this.state.preImage + Notification.SUBCATIMAGE}}/>
+                  <Text style={styles.cardTitle3}> {Notification.SUBCATTITLE}</Text>
+                </View>
+                <View style={styles.content}>
+                  <View style={[{alignItems: 'flex-end'}]}>
+                    <Text style={styles.cardTitle}> الاسم </Text>   
+                    <TextInput
+                      placeholder ={Notification.LISTINGNAME}
+                      placeholderTextColor = 'rgba(0,0,0,1)'
+                      returnKeyType = 'go'
+                      style = {styles.input}
+                      keyboardType = 'phone-pad'
+                      onChangeText = {(input) => this.setState({
+                        listingTitle: input
+                      })}
+                      /> 
+                  {/* </View>
+                  <View style={[{alignItems: 'flex-end'}]}> */}
+                  <Text style={styles.cardTitle}> رقم الهاتف</Text>   
+                    <TextInput
+                      placeholder ={Notification.LISTINGNUMBER}
+                      placeholderTextColor = 'rgba(0,0,0,1)'
+                      returnKeyType = 'go'
+                      style = {styles.input2}
+                      keyboardType = 'phone-pad'
+                      onChangeText = {(input) => this.setState({listingPhoneNumber: input})}
+                      /> 
+                  </View>               
+                <TouchableOpacity >
+                  <Text onPress={()=> this.updateListing(parseInt(Notification.LISTINGID))} style = {styles.buttonText2}> حفظ التعديلات </Text>
+
+                  <Text onPress={()=> this.setState({delService: true, listingId: parseInt(Notification.LISTINGID)})} style = {styles.buttonText2}> ازالة الخدمه </Text>
+
+
+                </TouchableOpacity>
+                
+                </View> 
+              </View>
+            );
+          }}/>
+          </View>
+          </View>
+          );
+      }
+    }
+
+
+    {
+      if(this.state.loaded) {
+      return (
       <ScrollView>
       
         <View style={styles.container}>
@@ -86,29 +230,31 @@ export default class EditProfile extends Component {
 
           <View style={styles.card}>
             <Text style={styles.cardTitle}> الاسم</Text>   
-            <TextInput 
-                    placeholder = {this.state.data[0].name}
+            <TextInput  
+                    placeholder = {this.state.data[0].USERNAME}
                     placeholderTextColor = 'rgba(0,0,0,1)'
                     color='rgba(0,0,0,1)'
                     returnKeyType = 'go'
                     style = {styles.input}
-                    // onChangeText={(use) => this.setState({username})}
+                    onChangeText={(input) =>  this.setState({userName: input})}
                     /> 
           </View>
 
           <View style={styles.card}>
             <Text style={styles.cardTitle}> رقم الهاتف</Text>   
             <TextInput
-                    placeholder ={this.state.person.number}
+                    placeholder ={this.state.data[0].USERNUMBER}
                     placeholderTextColor = 'rgba(0,0,0,1)'
-                    returnKeyType = 'go'
+                    color='rgba(0,0,0,1)'
+                    returnKeyType = 'phone-pad'
                     style = {styles.input}
-                    keyboardType = 'phone-pad'
-                    //ref {(input) => this.passwordInput = input}
+                    onChangeText = {(input) => this.setState({phoneNumber: input})}
                     /> 
           </View>
-          <TouchableOpacity onPress={()=> this.setState({delProfile: true})}> 
-              <Text style = {styles.buttonText2}> ازالة الحساب </Text>
+          <TouchableOpacity > 
+              <Text style = {styles.buttonText2} onPress={()=> this.updateUser()}> حفظ التعديلات </Text>
+
+              <Text style = {styles.buttonText2} onPress={()=> this.setState({delProfile: true})}> ازالة الحساب </Text>
           </TouchableOpacity>
           <View
              style={{
@@ -117,14 +263,30 @@ export default class EditProfile extends Component {
              marginTop: 3,
             }}
           />  
-          <EditListing/>
+        
+          {listings()}
+
+
         </View>
       </ScrollView>
     );
+    }else {
+      return (
+        <View style={styles.load}>
+          < ActivityIndicator/>
+        </View>
+      );
+    }
+  }
+    
   }
 }
 
 const styles = StyleSheet.create({
+  load:{
+    paddingTop: 30,
+    alignItems: 'center'
+  },
   container:{   
     flex:1,
     // padding:8,
@@ -156,7 +318,7 @@ const styles = StyleSheet.create({
   },
   cardTitle3:{
     alignSelf: 'center',
-    color:"#808080",
+    color:"black",
     fontSize:19,
   },
   avatar:{

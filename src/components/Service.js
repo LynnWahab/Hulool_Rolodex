@@ -46,6 +46,7 @@ export default class ProductDetail extends Component {
         {id: 4, url: "https://bootdey.com/img/Content/avatar/avatar2.png"},
         {id: 5, url: "https://bootdey.com/img/Content/avatar/avatar3.png"},
        ],
+      ratingValue: null,
     }
   }
   
@@ -97,8 +98,10 @@ export default class ProductDetail extends Component {
     this.setState({ phoneVisible: false });
   }
 
-  ratingCompleted(rating) {
-    console.log(rating)
+  ratingCompleted = rating => { 
+    console.log(rating);
+    this.setState({ratingValue: rating});
+    console.log(this.state.ratingValue);
   }
   handleClose = () => {
     this.setState({phonenVisible: false})
@@ -202,6 +205,7 @@ export default class ProductDetail extends Component {
         </DialogInput>
 
         <MaterialDialog
+        //heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeee
           style={{alignSelf: 'row-reverse'}}
           title="إدخل التقييم المناسب للخدمة"
           visible={this.state.rateVisible}
@@ -209,7 +213,8 @@ export default class ProductDetail extends Component {
           okLabel="إدخال" 
           onOk={() => {this.handleRInput()}}
           onCancel={() => {this.handleRCancel()}}>
-            <Rating   
+            <Rating
+            initialRating={3}   
             onFinishRating={this.ratingCompleted}
             />
         </MaterialDialog>
