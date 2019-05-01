@@ -28,8 +28,9 @@ export default class ProductDetail extends Component {
     super(props);
     this.state = {
       userId: this.props.navigation.state.params.userId,
-      listingId: this.props.navigation.state.params.id,
-      subCategoryTitle: this.props.navigation.state.params.subCategoryTitle, 
+      listingId: parseInt(this.props.navigation.state.params.id),
+      subCategoryTitle: this.props.navigation.state.params.subCategoryTitle,
+      avgRating:  this.props.navigation.state.params.stars,
       loaded1: false,
       loaded2: false,
       loaded3: false,
@@ -81,7 +82,37 @@ export default class ProductDetail extends Component {
     this.setState({ rateVisible: false });
   }
   handleRInput = () => {
-    this.setState({ rateVisible: false });
+    console.log(typeof parseInt(this.state.listingId));
+    console.log(typeof parseInt(this.state.userId));
+    console.log(typeof 4);
+    axios({
+      method: 'post',
+      url: 'https://rolodex2.azurewebsites.net/api/v1/user/addRating?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==',
+      data: {
+        LISTINGID: 8,
+        USERID: 3,
+        STARS: parseInt(this.state.ratingValue)
+      }
+    }).then((response) => {
+      console.log(response.data);
+    })
+
+    // axios({
+    //   method: 'post',
+    //   url: 'https://rolodex2.azurewebsites.net/api/v1/user/addRating?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==',
+    //   data: {
+    //     USERID: this.state.userId,
+    //     LISTINGID: this.state.listingId,
+    //     STARS: this.state.ratingValue
+    //   }
+    // }).then((response) => {
+    //   this.setState({
+    //     ratingValue: null
+    //   })
+    //   console.log(response.data);
+    // })
+
+    // this.setState({ rateVisible: false });
   }
   showRDialog(isShow){
     this.setState({rateVisible: isShow});
@@ -224,7 +255,7 @@ export default class ProductDetail extends Component {
             <Image style={styles.productImg} source={require('../images/profile.png')}/>
             <Text style={styles.name}> {this.state.data.TITLE} </Text>
             <Text style={styles.price}> {this.state.subCategoryTitle}</Text>
-            <Star style={styles.starStyle} score={3} />
+            <Star style={styles.starStyle} score={this.state.avgRating} />
           </View>
 
           <View style={styles.addToCarContainer}>

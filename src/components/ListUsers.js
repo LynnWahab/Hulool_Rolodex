@@ -83,7 +83,8 @@ export default class ListUsers extends React.Component {
                     id: item.LISTINGID,
                     subCategoryTitle: this.state.subCategoryTitle,
                     title: item.TITLE,
-                    userId: this.state.userId
+                    userId: this.state.userId,
+                    stars: item.STARS
                   })
             }>
               <Image style={styles.image} source={require('../images/profile.png')}/>
@@ -91,7 +92,7 @@ export default class ListUsers extends React.Component {
                 <Text style={styles.name}>{item.TITLE}</Text>
                 <View style={ styles.starscontainer }>
 				          <Star style={styles.starStyle} score={item.STARS} />
-				          <Text style={styles.text}>({item.STARS})</Text>
+				          <Text style={styles.text}>({item.COMMENTS})</Text>
 			          </View>
               </View>
             </TouchableOpacity>
