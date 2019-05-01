@@ -28,7 +28,7 @@ export default class ProductDetail extends Component {
     super(props);
     this.state = {
       userId: this.props.navigation.state.params.userId,
-      listingId: parseInt(this.props.navigation.state.params.id),
+      listingId: this.props.navigation.state.params.id,
       subCategoryTitle: this.props.navigation.state.params.subCategoryTitle,
       avgRating:  this.props.navigation.state.params.stars,
       loaded1: false,
@@ -82,37 +82,22 @@ export default class ProductDetail extends Component {
     this.setState({ rateVisible: false });
   }
   handleRInput = () => {
-    console.log(typeof parseInt(this.state.listingId));
-    console.log(typeof parseInt(this.state.userId));
-    console.log(typeof 4);
+    console.log(this.state.userId);
+    console.log(this.state.listingId);
+    console.log(this.state.ratingValue);
     axios({
       method: 'post',
       url: 'https://rolodex2.azurewebsites.net/api/v1/user/addRating?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==',
       data: {
-        LISTINGID: 8,
-        USERID: 3,
-        STARS: parseInt(this.state.ratingValue)
+        LISTINGID: this.state.listingId,
+        USERID: this.state.userId,
+        STARS: this.state.ratingValue
       }
     }).then((response) => {
       console.log(response.data);
     })
 
-    // axios({
-    //   method: 'post',
-    //   url: 'https://rolodex2.azurewebsites.net/api/v1/user/addRating?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==',
-    //   data: {
-    //     USERID: this.state.userId,
-    //     LISTINGID: this.state.listingId,
-    //     STARS: this.state.ratingValue
-    //   }
-    // }).then((response) => {
-    //   this.setState({
-    //     ratingValue: null
-    //   })
-    //   console.log(response.data);
-    // })
-
-    // this.setState({ rateVisible: false });
+    this.setState({ rateVisible: false });
   }
   showRDialog(isShow){
     this.setState({rateVisible: isShow});
@@ -126,6 +111,17 @@ export default class ProductDetail extends Component {
   }
   handleSendPhone = (phone: string) => {
     console.log(phone);
+    axios({
+          method: 'post',
+          url: 'https://rolodex2.azurewebsites.net/api/v1/Lisitng/claimListing?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==',
+          data: {
+            LISTINGID: this.state.listingId,
+            USERID: this.state.userId,
+          }
+        }).then((response) => {
+          console.log(response.data);
+        })
+
     this.setState({ phoneVisible: false });
   }
 
@@ -172,6 +168,7 @@ export default class ProductDetail extends Component {
             this.setState({loaded1: true});
             console.log("Service Profile Page data fetched:");            
             console.log(response.data);
+            console.log(this.state.data.UserID);
       });
   }
 
@@ -181,6 +178,7 @@ export default class ProductDetail extends Component {
             this.setState({COMMENTS: response.data});
             this.setState({loaded2: true});
             console.log("comments data fetched:");            
+            console.log(this.state.data.UserID == null);
             console.log(response.data);
       });
   }
@@ -188,6 +186,26 @@ export default class ProductDetail extends Component {
 
 
   render() {
+    claimBtn = ()=> {
+      if(this.state.data.UserID == null) {
+        return ( <TouchableOpacity onPress={()=> this.showPDialog(true)}> 
+                     <Text style = {styles.buttonText2}> تبنّى الخدمة </Text>
+                 </TouchableOpacity>);
+      }
+    }
+
+    feadBackBtns = ()=> {
+      if(this.state.data.UserID != this.state.userId) {
+        return ( <View style={styles.starContainer}>
+                    <TouchableOpacity style={styles.rate} onPress={()=> this.showRDialog(true)}>
+                      <Text style={styles.shareButtonText}>تقييم</Text>  
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.rate} onPress={()=>{this.showDialog(true)}} >
+                      <Text style={styles.shareButtonText}>تعليق</Text> 
+                    </TouchableOpacity>
+                  </View>);
+      }
+    }
 
     const args = {
       number: '909390000', 
@@ -263,18 +281,11 @@ export default class ProductDetail extends Component {
               <Text style={styles.shareButtonText}>اتّصل</Text>  
             </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={()=> this.showPDialog(true)}> 
-              <Text style = {styles.buttonText2}> تبنّى الخدمة </Text>
-          </TouchableOpacity>
+          {claimBtn()}
           <View style={styles.separator}></View>
-          <View style={styles.starContainer}>
-            <TouchableOpacity style={styles.rate} onPress={()=> this.showRDialog(true)}>
-              <Text style={styles.shareButtonText}>تقييم</Text>  
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.rate} onPress={()=>{this.showDialog(true)}} >
-              <Text style={styles.shareButtonText}>تعليق</Text> 
-            </TouchableOpacity>
-          </View>
+
+            {feadBackBtns()}
+
           <View style={styles.container}>
         <View style={styles.imges}>
         
