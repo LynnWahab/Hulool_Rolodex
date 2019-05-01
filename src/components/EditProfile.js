@@ -13,6 +13,7 @@ import {
 import { MaterialDialog } from 'react-native-material-dialog';
 import axios from 'axios';
 import EditListing from './EditListing';
+import BottomDrawer from 'rn-bottom-drawer';
 
 export default class EditProfile extends Component {
   
@@ -51,7 +52,10 @@ export default class EditProfile extends Component {
   }
 
   render() {
+    const { navigate } = this.props.navigation;
+
     return (
+      <View>
       <ScrollView>
       
         <View style={styles.container}>
@@ -120,6 +124,36 @@ export default class EditProfile extends Component {
           <EditListing/>
         </View>
       </ScrollView>
+      <BottomDrawer
+      containerHeight={150}
+      backgroundColor='#dcdcdc'>
+       <View style= {styles.cont}>
+
+         <TouchableOpacity onPress={()=> {
+           navigate('Home', {
+             // id: this.state.userId
+           })
+         }}>
+           <Image style={styles.flag} source = {require('../images/home.png')}/>
+         </TouchableOpacity>
+
+         <TouchableOpacity onPress={() => {
+           navigate('AboutUs', {
+            // id: this.state.userId
+          })
+         }}>
+           <Image style={styles.flag} source = {require('../images/info.png')}/>
+         </TouchableOpacity>
+
+         <TouchableOpacity onPress={() => {
+            
+         } }>
+           <Image style={styles.flag} source = {require('../images/profileicon.png')}/>
+         </TouchableOpacity>
+         
+       </View>
+     </BottomDrawer>
+     </View>
     );
   }
 }
@@ -181,6 +215,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: '#000',
     // paddingHorizontal: 50,
+},
+cont: {
+  flexDirection: 'row',
+  flex: 1,
+  marginLeft: 10,
+  marginRight: 10,
+  marginTop: 8,
+},
+flag:{
+  height: 40,
+  width: 40,
+  marginHorizontal: 40,
 },
   card:{
     backgroundColor: "#FFFFFF",

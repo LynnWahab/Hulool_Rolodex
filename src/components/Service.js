@@ -219,7 +219,7 @@ export default class ProductDetail extends Component {
             <Image style={styles.productImg} source={require('../images/profile.png')}/>
             <Text style={styles.name}> {this.state.data.TITLE} </Text>
             <Text style={styles.price}> {this.state.subCategoryTitle}</Text>
-            <Star style={styles.starStyle} score={3} />
+            <Star style={styles.starStyle} score={3.8} />
           </View>
 
           <View style={styles.addToCarContainer}>

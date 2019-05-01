@@ -37,7 +37,8 @@ export default class ListUsers extends React.Component {
       //   {id: 8, image: require('../images/profile.png'), username:"د. نبيل فكيه", ratings: 3, views:13},
       //   {id: 9, image: require('../images/profile.png'), username:"د. رولاند طعمة", ratings: 1, views:17},
       // ]
-      data: []
+      data: [],
+      isFetching: false,
     };
   }
 
@@ -53,8 +54,15 @@ export default class ListUsers extends React.Component {
             console.log("subcategoriesPage data fetched:");            
             console.log(response.data);
       });
+    this.setState({ isFetching: false })
+
   }
 
+  onRefresh() {
+    this.setState(
+      { isFetching: true }, 
+      function() { this.fetchData() });
+  }
   render() {
     const { navigate } = this.props.navigation;
     {if (this.state.loaded) {
@@ -71,6 +79,8 @@ export default class ListUsers extends React.Component {
         <FlatList 
           style={styles.userList}
           data={this.state.data}
+          onRefresh={() => this.onRefresh()}
+          refreshing={this.state.isFetching}
           keyExtractor= {(item) => {
             return item.LISTINGID.toString();
           }}

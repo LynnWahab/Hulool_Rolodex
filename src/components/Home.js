@@ -88,16 +88,11 @@ export default class HomePage extends React.Component {
            containerHeight={60}
            backgroundColor='#dcdcdc'>
             <View style= {styles.cont}>
-              {/* <TouchableOpacity onPress={()=> {}}>
-                <Image style={styles.flag} source = {require('../images/home.png')}/>
-              </TouchableOpacity> */}
 
-              <TouchableOpacity onPress={() => {
-                 navigate('EditProfile', {
-                  userId: this.state.userId
-                })
-              } }>
-                <Image style={styles.flag} source = {require('../images/profileicon.png')}/>
+              <TouchableOpacity onPress={()=> {
+                // do nothing
+              }}>
+                <Image style={styles.flag} source = {require('../images/home.png')}/>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={() => {
@@ -107,6 +102,16 @@ export default class HomePage extends React.Component {
               }}>
                 <Image style={styles.flag} source = {require('../images/info.png')}/>
               </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => {
+                 navigate('EditProfile', {
+                  userId: this.state.userId
+                })
+              } }>
+                <Image style={styles.flag} source = {require('../images/profileicon.png')}/>
+              </TouchableOpacity>
+
+              
             </View>
           </BottomDrawer>
         </View>

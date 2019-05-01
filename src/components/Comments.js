@@ -21,7 +21,7 @@ export default class Comments extends Component {
       repVisible: false,
       delVisible: false,
        userId: this.props.userId,
-       COMMENTS: this.props.COMMENTS
+       COMMENTS: this.props.COMMENTS,
     }
     
   }
@@ -85,6 +85,7 @@ export default class Comments extends Component {
       <FlatList
         style={styles.root}
         data={this.state.COMMENTS}
+        // onRefresh={()=> data.refetch}
         extraData={this.state}
         ItemSeparatorComponent={() => {
           return (
