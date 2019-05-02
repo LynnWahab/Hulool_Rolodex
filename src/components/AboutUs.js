@@ -34,7 +34,7 @@ export default class AboutUs extends Component {
 
               <TouchableOpacity onPress={()=> {
                 navigate('Home', {
-                  // id: this.state.userId
+                  userId: this.state.userId
                 })
               }}>
                 <Image style={styles.flag} source = {require('../images/home.png')}/>

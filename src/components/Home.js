@@ -97,7 +97,7 @@ export default class HomePage extends React.Component {
 
               <TouchableOpacity onPress={() => {
                 navigate('AboutUs', {
-                  // id: this.state.userId
+                  userId: this.state.userId
                 })
               }}>
                 <Image style={styles.flag} source = {require('../images/info.png')}/>
