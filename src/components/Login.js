@@ -15,7 +15,7 @@ export default class Login extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            userId: 0,
+            userId: 3,
         }
         // YellowBox.ignoreWarnings([
         //     'Warning: componentWillMount is deprecated',
