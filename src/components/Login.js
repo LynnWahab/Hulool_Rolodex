@@ -15,7 +15,7 @@ export default class Login extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            userId: 3,
+            userId: 0,
         }
         // YellowBox.ignoreWarnings([
         //     'Warning: componentWillMount is deprecated',
@@ -41,6 +41,9 @@ export default class Login extends React.Component {
                     style = {styles.input}
                     //onSubmitEditing={()=>this.passwordInput.focus()}
                     keyboardType = 'phone-pad'
+                    onChangeText = {(input) => this.setState({
+                        userId: input
+                      })}
                     />
                 <TextInput 
                     placeholder = "كلمة المرور"

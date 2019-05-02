@@ -10,7 +10,8 @@ import {
   ScrollView,
   FlatList,
   Button,
-  Easing
+  Easing,
+  RefreshControl
 } from 'react-native';
 import Comments from './Comments';
 import Star from 'react-native-star-view';
@@ -46,6 +47,8 @@ export default class ProductDetail extends Component {
         {id: 4, url: "https://bootdey.com/img/Content/avatar/avatar2.png"},
         {id: 5, url: "https://bootdey.com/img/Content/avatar/avatar3.png"},
        ],
+       refreshing: true,
+
     }
   }
   
@@ -74,6 +77,7 @@ export default class ProductDetail extends Component {
       this.setState({ dialogVisible: false });
     }
     this.setState({ dialogVisible: false });
+    this.fetchData1();
   }
 
   handleRCancel = () => {
@@ -125,12 +129,12 @@ export default class ProductDetail extends Component {
   };
 
 
-  async componentDidMount() {
-    await this.fetchData1();
-    await this.fetchData2();
+  componentDidMount() {
+    this.fetchData1();
+    this.fetchData2();
   }
 
-  fetchData1 = async () => {
+  fetchData1 = () => {
     axios.get('https://rolodex2.azurewebsites.net/api/v1/Listings/' + this.state.listingId +'/listing?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==')
         .then((response) => {
             this.setState({data: response.data});
@@ -139,9 +143,11 @@ export default class ProductDetail extends Component {
             console.log("Service Profile Page data fetched:");            
             console.log(response.data);
       });
+      this.setState({
+        refreshing: false})
   }
 
-  fetchData2 = async () => {
+  fetchData2 = () => {
     axios.get('https://rolodex2.azurewebsites.net/api/v1/Listing/' + this.state.listingId +'/comments?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==')
         .then((response) => {
             this.setState({COMMENTS: response.data});
@@ -149,6 +155,13 @@ export default class ProductDetail extends Component {
             console.log("comments data fetched:");            
             console.log(response.data);
       });
+      this.setState({
+        refreshing: false})
+  }
+  onRefresh() {
+    this.fetchData1();
+    this.fetchData2();
+
   }
 
 
@@ -214,12 +227,17 @@ export default class ProductDetail extends Component {
             />
         </MaterialDialog>
 
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this.onRefresh.bind(this)} 
+          />}>
           <View style={{alignItems:'center', marginHorizontal:30}}>
             <Image style={styles.productImg} source={require('../images/profile.png')}/>
             <Text style={styles.name}> {this.state.data.TITLE} </Text>
             <Text style={styles.price}> {this.state.subCategoryTitle}</Text>
-            <Star style={styles.starStyle} score={3.8} />
+            <Star style={styles.starStyle} score={3} />
           </View>
 
           <View style={styles.addToCarContainer}>
