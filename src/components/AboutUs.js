@@ -28,7 +28,7 @@ export default class AboutUs extends Component {
         <View style={styles.container}>
           <Image resizeMode='contain' style= {styles.imgcont} source ={require('../images/aboutus.png')}/> 
           <BottomDrawer
-           containerHeight={150}
+           containerHeight={140}
            backgroundColor='#dcdcdc'>
             <View style= {styles.cont}>
 

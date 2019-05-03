@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     height: 50,
     fontSize: 20,
-    // backgroundColor: 'rgba(225,225,225,0.2)',
+    backgroundColor: 'rgba(225,225,225,0.2)',
     marginBottom: 20,
     color: '#000',
     // paddingHorizontal: 50,

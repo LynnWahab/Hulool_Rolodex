@@ -85,7 +85,7 @@ export default class HomePage extends React.Component {
         <View style={styles.container}>
           {this.renderContent()}
           <BottomDrawer
-           containerHeight={60}
+           containerHeight={84}
            backgroundColor='#dcdcdc'>
             <View style= {styles.cont}>
 
@@ -135,10 +135,10 @@ const styles = StyleSheet.create({
   },
   container:{
     flex:1,
-    marginTop:0,
+    marginBottom:40,
   },
   gridView: {
-    marginTop: 30,
+    // marginTop: 30,
     flex: 2,
   },
   logoContainer: {

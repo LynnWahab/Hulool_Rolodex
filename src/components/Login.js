@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { 
     StyleSheet,
@@ -17,7 +16,7 @@ export default class Login extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            userId: 3,
+            userId: 22,
         }
         // YellowBox.ignoreWarnings([
         //     'Warning: componentWillMount is deprecated',
@@ -29,7 +28,7 @@ export default class Login extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <KeyboardAvoidingView style = {styles.container} behavior = "padding">
+            <View style = {styles.container} >
                 <ScrollView>
                 <View style = {styles.logoContainer}>
                     <Image 
@@ -80,7 +79,7 @@ export default class Login extends React.Component {
                 </TouchableOpacity> */}
             </View>
             </ScrollView>
-            </KeyboardAvoidingView>
+            </View>
         );
     }
 }
@@ -91,8 +90,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#12CBC4',
     },
     logoContainer: {
-        marginTop: 120,
-        marginBottom: 90,
+        marginTop: 100,
+        marginBottom: 12,
         flex: 2,
         backgroundColor:'transparent',
         justifyContent: 'center',

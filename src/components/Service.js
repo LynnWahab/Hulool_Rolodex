@@ -10,8 +10,7 @@ import {
   ScrollView,
   FlatList,
   Button,
-  Easing,
-  RefreshControl
+  Easing
 } from 'react-native';
 import Comments from './Comments';
 import Star from 'react-native-star-view';
@@ -48,8 +47,7 @@ export default class ProductDetail extends Component {
         {id: 4, url: "https://bootdey.com/img/Content/avatar/avatar2.png"},
         {id: 5, url: "https://bootdey.com/img/Content/avatar/avatar3.png"},
        ],
-       refreshing: true,
-
+      ratingValue: null,
     }
   }
   
@@ -78,7 +76,6 @@ export default class ProductDetail extends Component {
       this.setState({ dialogVisible: false });
     }
     this.setState({ dialogVisible: false });
-    this.fetchData1();
   }
 
   handleRCancel = () => {
@@ -128,8 +125,10 @@ export default class ProductDetail extends Component {
     this.setState({ phoneVisible: false });
   }
 
-  ratingCompleted(rating) {
-    console.log(rating)
+  ratingCompleted = rating => { 
+    console.log(rating);
+    this.setState({ratingValue: rating});
+    console.log(this.state.ratingValue);
   }
   handleClose = () => {
     this.setState({phonenVisible: false})
@@ -156,12 +155,12 @@ export default class ProductDetail extends Component {
   };
 
 
-  componentDidMount() {
-    this.fetchData1();
-    this.fetchData2();
+  async componentDidMount() {
+    await this.fetchData1();
+    await this.fetchData2();
   }
 
-  fetchData1 = () => {
+  fetchData1 = async () => {
     axios.get('https://rolodex2.azurewebsites.net/api/v1/Listings/' + this.state.listingId +'/listing?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==')
         .then((response) => {
             this.setState({data: response.data});
@@ -171,11 +170,9 @@ export default class ProductDetail extends Component {
             console.log(response.data);
             console.log(this.state.data.UserID);
       });
-      this.setState({
-        refreshing: false})
   }
 
-  fetchData2 = () => {
+  fetchData2 = async () => {
     axios.get('https://rolodex2.azurewebsites.net/api/v1/Listing/' + this.state.listingId +'/comments?code=DQzhL1VTa16VEZkR3EOCB2MdgtmllfFgMcW/PVjzMQVv89n7ksR1Iw==')
         .then((response) => {
             this.setState({COMMENTS: response.data});
@@ -184,13 +181,6 @@ export default class ProductDetail extends Component {
             console.log(this.state.data.UserID == null);
             console.log(response.data);
       });
-      this.setState({
-        refreshing: false})
-  }
-  onRefresh() {
-    this.fetchData1();
-    this.fetchData2();
-
   }
 
 
@@ -264,6 +254,7 @@ export default class ProductDetail extends Component {
         </DialogInput>
 
         <MaterialDialog
+        //heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeee
           style={{alignSelf: 'row-reverse'}}
           title="إدخل التقييم المناسب للخدمة"
           visible={this.state.rateVisible}
@@ -271,17 +262,13 @@ export default class ProductDetail extends Component {
           okLabel="إدخال" 
           onOk={() => {this.handleRInput()}}
           onCancel={() => {this.handleRCancel()}}>
-            <Rating   
+            <Rating
+            initialRating={3}   
             onFinishRating={this.ratingCompleted}
             />
         </MaterialDialog>
 
-        <ScrollView
-          refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this.onRefresh.bind(this)} 
-          />}>
+        <ScrollView>
           <View style={{alignItems:'center', marginHorizontal:30}}>
             <Image style={styles.productImg} source={require('../images/profile.png')}/>
             <Text style={styles.name}> {this.state.data.TITLE} </Text>
