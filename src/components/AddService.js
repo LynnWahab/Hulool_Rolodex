@@ -4,7 +4,8 @@ import {
   Text,
   View,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from "react-native";
 import axios from "axios";
 import { selectContactPhone } from 'react-native-select-contact';
@@ -22,10 +23,11 @@ export default class AddService extends React.Component {
 
   render() {
     console.log(this.state.subCategoryId);
-    console.log("whhy");
+    // console.log("test");
     return (
     
       <View style={styles.container}>
+        <ScrollView>
         <Text style={styles.header}> إضافة خدمة جديده</Text>
         <TextInput
           style={styles.TextInput}
@@ -50,20 +52,6 @@ export default class AddService extends React.Component {
           // value = {this.state.providerName}
           onChangeText={(text) => this.setState({phoneNumber: text})}
           />
-
-        <TouchableOpacity style={styles.button} onPress = {()=>
-            selectContactPhone()
-            .then(selection => {
-
-                let { contact, selectedPhone } = selection;
-                console.log(`Selected ${selectedPhone.type} phone number ${selectedPhone.number} from ${contact.name}`);
-                // return selectedPhone.number;
-            })
-
-          }>
-          <Text style={styles.btntext}> Add from contacts</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity style={styles.button} onPress = {()=>
           // this.props.navigation.navigate('ListUsers')
           axios({
@@ -81,6 +69,20 @@ export default class AddService extends React.Component {
           }>
           <Text style={styles.btntext}> إضافه</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress = {()=>
+            selectContactPhone()
+            .then(selection => {
+
+                let { contact, selectedPhone } = selection;
+                console.log(`Selected ${selectedPhone.type} phone number ${selectedPhone.number} from ${contact.name}`);
+                // return selectedPhone.number;
+            })
+
+          }>
+          <Text style={styles.btntext}>  إضافة من جهات الاتصال</Text>
+        </TouchableOpacity>
+
+        </ScrollView>
       </View>
     );
   }
@@ -101,7 +103,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     paddingBottom: 10,
-    marginBottom: 40,
+    marginBottom: 30,
     borderBottomColor: "#FFF",
     borderBottomWidth: 1
   },
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
     height: 50,
     fontSize: 20,
     backgroundColor: 'rgba(225,225,225,0.2)',
-    marginBottom: 20,
+    marginBottom: 10,
     color: '#FFF',
     paddingHorizontal: 10,
     borderRadius: 15,
@@ -121,15 +123,16 @@ const styles = StyleSheet.create({
     marginTop: 30,
     backgroundColor: 'rgba(225,225,225,0.5)',
     paddingVertical: 18,
+    height: 60,
     width: '100%',
     textAlign: "center",
     borderRadius: 15,
 
   },
   btntext:{ 
-    fontSize: 25,
+    fontSize: 20,
     textAlign: 'center',
-    fontWeight: '700',
+    fontWeight: '500',
     alignItems: "center",
     color: 'white'
   }

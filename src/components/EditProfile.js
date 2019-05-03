@@ -156,7 +156,7 @@ export default class EditProfile extends Component {
                       placeholderTextColor = 'rgba(0,0,0,1)'
                       returnKeyType = 'go'
                       style = {styles.input}
-                      keyboardType = 'phone-pad'
+                      // keyboardType = 'phone-pad'
                       onChangeText = {(input) => this.setState({
                         listingTitle: input
                       })}
@@ -169,7 +169,7 @@ export default class EditProfile extends Component {
                       placeholderTextColor = 'rgba(0,0,0,1)'
                       returnKeyType = 'go'
                       style = {styles.input2}
-                      keyboardType = 'phone-pad'
+                      // keyboardType = 'phone-pad'
                       onChangeText = {(input) => this.setState({listingPhoneNumber: input})}
                       /> 
                   </View>               
@@ -245,7 +245,7 @@ export default class EditProfile extends Component {
                     placeholder ={this.state.data[0].USERNUMBER}
                     placeholderTextColor = 'rgba(0,0,0,1)'
                     color='rgba(0,0,0,1)'
-                    returnKeyType = 'phone-pad'
+                    // returnKeyType = 'phone-pad'
                     style = {styles.input}
                     onChangeText = {(input) => this.setState({phoneNumber: input})}
                     /> 

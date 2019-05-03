@@ -8,7 +8,9 @@ import {
     TextInput,
     TouchableOpacity,
     YellowBox,
-    Alert
+    ScrollView,
+    Alert,
+    KeyboardAvoidingView
 } from 'react-native';
 // import LoginForm from './LoginForm'
 export default class Login extends React.Component {
@@ -27,7 +29,8 @@ export default class Login extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <View style = {styles.container}>
+            <KeyboardAvoidingView style = {styles.container} behavior = "padding">
+                <ScrollView>
                 <View style = {styles.logoContainer}>
                     <Image 
                         style={styles.logo}
@@ -40,17 +43,20 @@ export default class Login extends React.Component {
                     returnKeyType = 'next'
                     style = {styles.input}
                     //onSubmitEditing={()=>this.passwordInput.focus()}
-                    keyboardType = 'phone-pad'
+                    keyboardType = 'default'
                     onChangeText = {(input) => this.setState({
                         userId: input
                       })}
                     />
+
                 <TextInput 
                     placeholder = "كلمة المرور"
                     placeholderTextColor = 'rgba(225,225,225,1)'
                     secureTextEntry
                     returnKeyType = 'go'
+                    enablesReturnKeyAutomatically= 'true'
                     style = {styles.input}
+                    // keyboardType = 'phone-pad'
                     //ref {(input) => this.passwordInput = input}
                     />
                 <TouchableOpacity style = {styles.buttonContainer} 
@@ -73,7 +79,8 @@ export default class Login extends React.Component {
                     <Text style = {styles.buttonText2}>  إنشاء حساب جديد  </Text>
                 </TouchableOpacity> */}
             </View>
-            </View>
+            </ScrollView>
+            </KeyboardAvoidingView>
         );
     }
 }
@@ -84,6 +91,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#12CBC4',
     },
     logoContainer: {
+        marginTop: 120,
+        marginBottom: 90,
         flex: 2,
         backgroundColor:'transparent',
         justifyContent: 'center',
