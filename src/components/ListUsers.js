@@ -22,7 +22,7 @@ export default class ListUsers extends React.Component {
     this.state = {
       loaded: false,
       userId: this.props.navigation.state.params.userId,
-      subCategoryId: this.props.navigation.state.params.id,
+      subCategoryId: this.props.navigation.state.params.subCategoryId,
       subCategoryTitle: this.props.navigation.state.params.subCategoryTitle,
       title: this.props.navigation.state.params.title,
       modalVisible:false,
@@ -70,7 +70,10 @@ export default class ListUsers extends React.Component {
     <View style={styles.bigcontainer}>
       <Text style={styles.addServiceBtn} onPress={() =>
         navigate('AddService', {
-          id: this.state.subCategoryId
+          userId: this.state.userId,
+          subCategoryId: this.state.subCategoryId,
+          subCategoryTitle: this.state.subCategoryTitle,
+          title: this.state.title,
         })
       } 
         // this.props.navigation.navigate('AddService')}

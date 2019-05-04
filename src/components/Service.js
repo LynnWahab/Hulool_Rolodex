@@ -212,7 +212,7 @@ export default class ProductDetail extends Component {
       prompt: false 
     };
     const options = {
-      title: 'Select Image',
+      title: 'اختيار الصوره',
       customButtons: [
         { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
       ],

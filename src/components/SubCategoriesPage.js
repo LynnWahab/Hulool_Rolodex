@@ -80,7 +80,7 @@ export default class SubCategoriesPage extends React.Component {
                 // ()=>this.props.navigation.navigate('ListUsers')
                 ()=>
                   navigate('ListUsers', {
-                    id: item.SUBCATEGORYID,
+                    subCategoryId: item.SUBCATEGORYID,
                     subCategoryTitle: item.TITLE,
                     title: item.TITLE,
                     userId: this.state.userId

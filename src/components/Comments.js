@@ -64,20 +64,20 @@ export default class Comments extends Component {
 
       <MaterialDialog
           style={{alignSelf: 'row-reverse'}}
-          title="Are you sure you want to report"
+          title="تأكيد التبليغ عن التعليق؟"
           visible={this.state.repVisible}
-          cancelLabel="no"
-          okLabel="yes" 
+          cancelLabel="لا"
+          okLabel="نعم" 
           onOk={() => {this.handleSendRep()}}
           onCancel={() => {this.handleRepCancel()}}>
       </MaterialDialog>
 
       <MaterialDialog
           style={{alignSelf: 'row-reverse'}}
-          title="Are you sure you want to delete"
+          title="تأكيد ازالة التعليق؟"
           visible={this.state.delVisible}
-          cancelLabel="no"
-          okLabel="yes" 
+          cancelLabel="لا"
+          okLabel="نعم" 
           onOk={() => {this.handleDel()}}
           onCancel={() => {this.handleDelCancel()}}>
       </MaterialDialog>

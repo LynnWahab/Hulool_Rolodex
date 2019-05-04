@@ -14,7 +14,10 @@ export default class AddService extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      subCategoryId: this.props.navigation.state.params.id,
+      userId: this.props.navigation.state.params.userId,
+      subCategoryId: this.props.navigation.state.params.subCategoryId,
+      subCategoryTitle: this.props.navigation.state.params.subCategoryTitle,
+      title: this.props.navigation.state.params.title,
       providerName: null,
       phoneNumber: null,
     }
@@ -22,6 +25,8 @@ export default class AddService extends React.Component {
 
 
   render() {
+    const { navigate } = this.props.navigation;
+
     console.log(this.state.subCategoryId);
     // console.log("test");
     return (
@@ -64,6 +69,12 @@ export default class AddService extends React.Component {
             }
           }).then((response) => {
             console.log(response.data);
+            navigate('ListUsers', {
+              subCategoryId: this.state.subCategoryId,
+              subCategoryTitle: this.state.subCategoryTitle,
+              title: this.state.title,
+              userId: this.state.userId,
+            })
           })
           
           }>
